@@ -1,0 +1,61 @@
+﻿@model ProjetoFinanca.Modelo.Periodo
+
+@{
+    ViewBag.Title = "Novo Período";
+}
+
+
+@using (Html.BeginForm("Create", "Periodo", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    <div class="formulario">
+        <h2 class="titulo">Período atual</h2>
+        <div class="data">
+            <div class="form-group">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mês de referência" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="valor">
+            <div class="form-group">
+                @Html.EditorFor(x => x.DataInicio, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="descricao">
+            <div class="form-group">
+                @Html.EditorFor(model => model.DataFim, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DataFim, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="valor">
+            <div class="form-group">
+                @Html.EditorFor(x => x.Valor, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="groupBotoes">
+            <div class="form-group">
+                <input type="submit" value="Enviar" class="btn enviar" />
+            </div>
+            <div class="form-group">
+                <input type="reset" class="btn cancelar" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#DataInicio").datetimepicker({
+               format:'d/m/y',
+               lang:'pt-BR',
+               timepicker: false,
+               defaultDate: new Date()
+            });
+            $("#DataFim").datetimepicker({
+                format: 'd/m/y',
+                lang: 'pt-BR',
+                timepicker: false
+            });
+        });
+    </script>
+}

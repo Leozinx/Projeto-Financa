@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "../Shared/_LayouProjeto.cshtml";
+}
+
+<div class="graficos">
+    <div class="ult-lancamento">
+        <p>Últimos Lançamentos</p>
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="per-atual">
+        <p>Período Atual</p>
+        <canvas id="pie-chart" width="800" height="450"></canvas>
+        <div class="info">
+            <div class="info-titulo">
+                <h3 style="text-align: center">Resumo</h3>
+            </div>
+            <div class="info-item">
+                <label>Total:</label>
+                <label class="valor_total"></label>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            //Inicializar Gráfico
+            var ctx = $("#myChart");
+            var datas = [];
+            var valores = [];
+            var tipo = [];
+            $.get("/Home/Filtro",
+                function (resultado) {
+                    //receber conjuntos para grafico de barra com os ultimos lancamentos
+                    var result = resultado[0];
+
+                    //Soma para grafico area
+                    var soma = resultado[1];
+                    var tipos = resultado[2];
+
+                    for (var i = 0; i < result.length; i++) {
+                        datas.push(result[i].Lancamento);
+                        valores.push(result[i].Valor);
+                        tipo.push(result[i].Nome);
+                    }
+
+                    var total = 0;
+
+                    for (var i = 0; i < soma.length; i++) {
+                        total += soma[i];
+                    }
+                    //Gráfico Ultimos Lancamentos
+                    graficoBarra(ctx, datas, valores, tipo);
+
+                    graficoPierArea(tipos, soma);
+                    $(".valor_total").text("R$ "+total.toFixed(2));
+                });
+
+            function graficoBarra(ctx, datas, valores, categoria) {
+                var myChart = new Chart(ctx,
+                    {
+                        type: 'line',
+                        data: {
+                            labels: datas,
+                            datasets: [
+                                {
+                                    label: null,
+                                    data: valores,
+                                    backgroundColor: [
+                                        '#00c0ef'
+                                    ],
+                                    borderColor: [
+                                        'black'
+                                    ],
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Últimos Lançamentos'
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function(value, index, values) {
+                                                return 'R$ ' + value + ",00";
+                                            },
+                                            beginAtZero: true
+                                        }
+                                    }
+                                ]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    });
+            }
+
+
+            function graficoPierArea(valor1, valor2) {
+                new Chart(document.getElementById("pie-chart"),
+                    {
+                        type: 'pie',
+                        data: {
+                            labels: valor1,
+                            datasets: [
+                                {
+                                    label: "Population (millions)",
+                                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                    data: valor2
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'Lançamentos por categoria'
+                            }
+                        }
+                    });
+            }
+        });
+
+
+    </script>
+}

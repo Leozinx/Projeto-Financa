@@ -1,0 +1,228 @@
+﻿@model ProjetoFinanca.Modelo.Periodo
+
+@{
+    ViewBag.Title = Model.Nome;
+}
+
+<div class="info">
+    @*<h1>Mês referência: @Model.Nome</h1>*@
+    <div class="info-titulo">
+        <h1>Periodo</h1>
+        <h2>
+            <i class="fas fa-calendar-alt"></i> <span class="data_Ini">@Model.DataInicio.ToShortDateString()</span>
+        </h2>
+        <h2>
+            <i class="fas fa-calendar-alt"></i> <span class="data_fini">@Model.DataFim.ToShortDateString()</span>
+        </h2>
+    </div>
+
+
+
+    <div class="info-grafico">
+        <canvas id="line" width="800" height="450"></canvas>
+    </div>
+    <div class="info-grafico">
+        <canvas id="pie-chart" width="800" height="450"></canvas>
+    </div>
+</div>
+<div class="info">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Movimentacao.OrderByDescending(x => x.Data))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                        
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                        
+                </td>
+                <td>
+                    <label>R$ </label>@Html.DisplayFor(modelItem => item.Valor)
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            //Inicializar Gráfico
+            var ctx = $("#line");
+            var datas = [];
+            var valores = [];
+            var tipo = ["Casal", "Pessoal"];
+            var id = @Model.Id;
+            $.post('/Movimenta/RelacaoMovPer', {i: id},
+                function (resultado) {
+                    //receber conjuntos para grafico de barra com os ultimos lancamentos
+                    var result = resultado[0];
+
+                    //Soma para grafico area
+                    var soma = resultado[1];
+                    var tipos = resultado[2];
+
+                    for (var i = 0; i < result.length; i++) {
+                        datas.push(result[i].Lancamento);
+                        valores.push(result[i].Valor);
+                        tipo.push(result[i].Nome);
+                    }
+
+                    var total = 0;
+
+                    for (var i = 0; i < soma.length; i++) {
+                        total += soma[i];
+                    }
+
+                    //Gráfico Ultimos Lancamentos
+                    graficoBarra(ctx, datas, valores);
+                    graficoPierArea(tipos, soma);
+                });
+
+            function graficoBarra(ctx, datas, valores) {
+                var myChart = new Chart(ctx,
+                    {
+                        type: 'line',
+                        data: {
+                            labels: datas,
+                            datasets: [
+                                {
+                                    label: null,
+                                    data: valores,
+                                    backgroundColor: [
+                                        '#00c0ef'
+                                    ],
+                                    borderColor: [
+                                        'black'
+                                    ],
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Últimos Lançamentos'
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function(value, index, values) {
+                                                return 'R$ ' + value + ",00";
+                                            },
+                                            beginAtZero: true
+                                        }
+                                    }
+                                ]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    });
+            }
+
+
+            //var ctx = document.getElementById("myChart");
+
+            function graficoPierArea(valor1, valor2) {
+                new Chart(document.getElementById("pie-chart"),
+                    {
+                        type: 'pie',
+                        data: {
+                            labels: valor1,
+                            datasets: [
+                                {
+                                    label: "Population (millions)",
+                                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                    data: valor2
+                                }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'Lançamentos por categoria'
+                            }
+                        }
+                    });
+            }
+        });
+        //var ctx = document.getElementById("line");
+        //var myChart = new Chart(ctx, {
+        //    type: 'line',
+        //    data: {
+        //        labels: ["08/08", "15/07", "23/07", "29/07", "31/07", "07/09"],
+        //        datasets: [{
+        //            label: '# of Votes',
+        //            data: [12, 19, 3, 5, 2, 3],
+        //            backgroundColor: [
+        //                '#00c0ef'
+        //            ],
+        //            borderColor: [
+        //                'white'
+        //            ],
+        //            borderWidth: 1
+        //        }]
+        //    },
+        //    options: {
+        //        title: {
+        //            display: true,
+        //            text: 'Lançamentos executados'
+        //        },
+        //        scales: {
+        //            yAxes: [{
+        //                ticks: {
+        //                    beginAtZero: true
+        //                }
+        //            }]
+        //        }
+        //    }
+        //});
+
+        //new Chart(document.getElementById("pie-chart"), {
+        //    type: 'pie',
+        //    data: {
+        //        labels: ["Casal", "Pessoal", ],
+        //        datasets: [{
+        //            label: "Population (millions)",
+        //            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+        //            data: [2478, 5267]
+        //        }]
+        //    },
+        //    options: {
+        //        title: {
+        //            display: true,
+        //            text: 'Lançamentos por Categoria'
+        //        },
+        //    }
+        //});
+    </script>
+}

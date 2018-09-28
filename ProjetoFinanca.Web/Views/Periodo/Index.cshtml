@@ -1,0 +1,263 @@
+﻿@model IEnumerable<ProjetoFinanca.Modelo.Periodo>
+
+@{
+    ViewBag.Title = "Relação de Periodos";
+}
+
+<ul class="accordeon">
+    <li>
+        <a href="#first" class="accordeon-header">Períodos</a>
+        <div class="accordeon-conteudo" id="first">
+            <div class="info">
+                <div class="info-grafico">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nome)
+                                </th>
+                                <th>
+                                    <label>Início</label>
+                                </th>
+                                <th>
+                                    <label>Fim</label>
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Valor)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Situacao)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="corpoTabela">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td id="NomePeriodo">
+                                        <label>@Html.DisplayFor(modelItem => item.Nome)</label>
+                                    </td>
+                                    <td>
+                                        @item.DataInicio.ToString("dd/MM")
+                                    </td>
+                                    <td>
+                                        @item.DataFim.ToString("dd/MM")
+                                    </td>
+                                    <td id="valorPeriodo">
+                                        R$ @Html.DisplayFor(modelItem => item.Valor)
+                                    </td>
+                                    @{
+                                        if (item.Situacao)
+                                        {
+                                            <td>
+                                                <span class="fas fa-check-double" style="color: green"></span>
+                                            </td>
+                                            <td>
+                                                @*<a href="@Url.Action("Details", "Periodo")" class="btn-warning" id="item.Id">
+                                                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                                    </a>*@
+                                                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <label>Em aberto</label>
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                                                <button class="btn-danger">
+                                                    <i class="fas fa-calculator"></i>
+                                                    Calcular
+                                                </button>
+                                            </td>
+                                        }
+                                    }
+
+                                </tr>
+                                        }
+                        </tbody>
+
+
+                    </table>
+                </div>
+                <div class="info-grafico">
+                    <canvas id="line" width="800" height="450"></canvas>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <a href="#second" class="accordeon-header">Gráfico por categorias</a>
+        <div class="accordeon-conteudo" id="second">
+            <canvas id="mixed" width="800" height="450"></canvas>
+        </div>
+    </li>
+</ul>
+
+
+
+
+<p>
+    @Html.ActionLink("Adicionar novo período", "Create")
+</p>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var ctx = $("#line");
+            var ctx2 = $("#mixed");
+            var legenda = [];
+            var valores = [];
+
+            //RelacaoCategoria
+            $.post('/Movimenta/RelacaoCategoria',
+                function (resultado) {
+
+                    var resul = resultado;
+                    var _periodo = [];
+                    var casal = [];
+                    var pessoal = [];
+                    var outros = [];
+
+                    $.each(resultado, function (index, value) {
+                        _periodo.push(value.periodo);
+
+                        pessoal.push(value._movimentoCategoria[0].Valor);
+                        casal.push(value._movimentoCategoria[1].Valor);
+                        outros.push(value._movimentoCategoria[2].Valor);
+
+                    });
+                    graficoMixed(ctx2, _periodo, pessoal, casal, outros);
+                });
+
+
+            $("table tbody tr").each(function () {
+                var tableData = $(this).children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                legenda.push(tableData[0].replace(/\n/ig, '').trim());
+                valores.push(parseFloat(tableData[3].replace(/\n/ig, '').trim().slice(3).replace(',', '.')));
+
+            });
+
+            graficoBarra(ctx, legenda, valores);
+            
+
+            function graficoBarra(ctx, datas, valores) {
+                var myChart = new Chart(ctx,
+                    {
+                        type: 'line',
+                        data: {
+                            labels: datas,
+                            datasets: [
+                                {
+                                    label: null,
+                                    data: valores,
+                                    backgroundColor: ['#00c0ef'],
+                                    borderColor: ['black'],
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Últimos Lançamentos'},
+                            plugins: {
+                                datalabels: {
+                                    backgroundColor: function (context) {
+                                        return context.dataset.backgroundColor;
+                                    },
+                                    borderRadius: 4,
+                                    color: 'white',
+                                    font: {
+                                        weight: 'bold'
+                                    },
+                                    formatter: Math.round
+                                }
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function (value, index, values) {
+                                                return 'R$ ' + value + ",00";
+                                            },
+                                            beginAtZero: true
+                                        }
+                                    }
+                                ]
+                            },
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    });
+            }
+
+            function graficoMixed(ctx, labels, pessoal, casal, outros) {
+                var mixedChart = new Chart(ctx,
+                    {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: pessoal,
+                                label: "Pessoal",
+                                borderColor: "#3e95cd",
+                                fill: true
+                            }, {
+                                data: casal,
+                                label: "Casal",
+                                borderColor: "#8e5ea2",
+                                fill: true
+                            }, {
+                                data: outros,
+                                label: "Outros",
+                                borderColor: "#3cba9f",
+                                fill: true
+                            }
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'Gráfico por categoria'
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function (value, index, values) {
+                                                return 'R$ ' + value + ",00";
+                                            },
+                                            beginAtZero: true
+                                        }
+                                    }
+                                ]
+                            },
+                        }
+                    });
+            }
+        });
+    </script>
+}

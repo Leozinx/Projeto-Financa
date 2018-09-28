@@ -1,0 +1,20 @@
+﻿26/03/2018;8,37;Indiana (Cimelide);Pessoal
+24/03/2018;126,00;MaisSorriso;Pessoal
+23/03/2018;145,00;Revisão Moto;Pessoal
+21/03/2018;30,00;Açaí;Casal
+19/03/2018;30,00;TecaLanches;Casal
+17/03/2018;20,60;AmoçoNeia;Casal
+16/03/2018;22,77;Coelho Diniz;Casal
+16/03/2018;83,00;RevisãoMotoMatheus;Outros
+08/03/2018;195,83;Televisão;Casal
+08/03/2018;233,33;FotosCasamento;Casal
+08/03/2018;160,44;Aluguel Carro;Casal
+08/03/2018;126,00;Paulo;Outros
+27/03/2018;26,71;Indiana Periocarde;Pessoal
+29/03/2018;40,00;PizzaSucesso;Casal
+26/03/2018;29,00;TecaLanches;Casal
+02/04/2018;39,90;CacauShow;Pessoal
+02/04/2018;25,00;CasaDoChocolate;Casal
+07/04/2018;292,84;Coelho Diniz;Casal
+06/04/2018;48,00;Tibia;Pessoal
+06/04/2018;36,00;SucessoLanche;Casal

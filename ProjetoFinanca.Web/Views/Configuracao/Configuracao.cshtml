@@ -1,0 +1,415 @@
+﻿@using ProjetoFinanca.Web.Models
+@model IEnumerable<MovimentaModel>
+@{
+    ViewBag.Title = "Upload / Download";
+}
+
+<div class="settings">
+    <h2>Configurações adicionais do sistema</h2>
+    <div class="importacao">
+        <div class="importacao-titulo">
+            <img src="~/Content/imagens/upload.png">
+            <h4>Importar arquivo para base de dados.</h4>
+        </div>
+        <div class="importacao-referencia">
+            <select class="form-control">
+                <option value="0">Selecione Periodo</option>
+                <option value="1">Janeiro/2018</option>
+                <option value="1">Fevereiro/2018</option>
+            </select>
+        </div>
+        <div class="importacao-file">
+            <p>Selecione arquivo para importar</p>
+
+            <input type="file" name="postedFile" />
+            <input class="btn-success" type="submit" value="Carregar" />
+        </div>
+    </div>
+    <div class="exportacao">
+        <div class="exportacao-titulo">
+            <img src="~/Content/imagens/download.png">
+            <h4>Download da base de dados.</h4>
+        </div>
+        <div class="exportacao-file">
+            <p>Selecione o tipo de arquivo que deseja exportar</p>
+            <div class="exportacao-file-icon">
+                <span><a href="#"><img src="~/Content/imagens/notepad.png" alt="txt"></a></span>
+            </div>
+            <div class="exportacao-file-icon">
+                <span><a href="#"><img src="~/Content/imagens/acrobat2.png" alt="Pdf"></a></span>
+            </div>
+            <div class="exportacao-file-icon">
+                <span><a href="#"><img src="~/Content/imagens/excel.png" alt="Excel"></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    @*<div class="row">
+             <div class="col-md-12">
+                 @using (Html.BeginForm("Configuracao", "Configuracao", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                 {
+                     <input type="file" name="postedFile" />
+                     <input type="submit" value="Import" />
+                     <input type="reset" value="Resetar"/>
+                 }
+                 @if (Model.Count() > 0)
+                 {
+                     <hr />
+        <h1>Mês referencia: @ViewBag.Nome</h1>
+                     <table class="table table-bordered" cellpadding="0" cellspacing="0">
+                         <tr>
+                             <th>Data</th>
+                             <th>Descrição</th>
+                             <th>Categoria</th>
+                             <th>Valor</th>
+                             <th></th>
+                         </tr>
+                         @foreach (MovimentaModel customer in Model)
+                         {
+                             <tr>
+                                 <td>@customer.Data_Mov</td>
+                                 <td>@customer.Descri_Mov</td>
+                                 <td>@customer.Categoria_Mov</td>
+                                 <td>@customer.Valor_Mov</td>
+                                 <td><button type="button" id="Processa_btn" class="btn-warning">Processar...</button></td>
+                             </tr>
+                         }
+                     </table>
+                 }
+             </div>
+         </div>*@
+    <div class="row" id="data-area" style="display: none;">
+        <div class="col-md-12">
+            <label class="control control--checkbox">
+                Marcar Todos
+                <input type="checkbox" id="marcarTodos">
+                <div class="control__indicator"></div>
+            </label>
+            <button type="button" id="btn-marcar" class="btn-primary">Processar todos</button>
+            <table id="tabelas" class="table table-bordered" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabelass"></tbody>
+            </table>
+        </div>
+        <!-- Modal -->
+
+    </div>
+</div>
+<div class="area-modal">
+    <button type="button" style="display: none;" id="modalBtn" class="button">Clique Aqui!</button>
+    <div id="simpleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="closeBtn">&times;</span>
+                <h2 class="descricao_movimento">Titulo do Modal</h2>
+            </div>
+            <div class="modal-body">
+                <div class="DataValorDescricao">
+                    @*<label>Data:</label><p class="data_movimento"></p>
+                        <label>Valor:</label><p class="valor_movimento"></p>
+                        <label>Categoria:</label><p class="categoria_movimento"></p>*@
+                </div>
+                <div class="periodo">
+                    <label>Periodo: </label>@Html.DropDownList("PeriodoId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button">Processar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var $thatRow;
+
+        // Quando ocorre um click em uma linha da tabela tr,
+        // salva essa linha como uma variável global para poder ser usada como ponto de referência onde o click ocorreu
+        $(document).on('click',
+            '#tabelas tbody tr',
+            function () {
+                $thatRow = $(this);
+            });
+        //buscar elemento modal
+        var modal = document.getElementById('simpleModal');
+        //buscar botão do modal
+        var modalBtn = document.getElementById('modalBtn');
+        //botao fechar modal
+        var closeBtn = document.getElementsByClassName('closeBtn')[0];
+
+        //Evento para abrir modal
+        modalBtn.addEventListener('click', openModal);
+        //Evento para fechar modal
+        closeBtn.addEventListener('click', closeModal);
+        //Clicar fora do botão
+        window.addEventListener('click', outsideClick);
+
+        //função abrir modal
+        function openModal() {
+            modal.style.display = 'block';
+        }
+
+        //função fechar modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        //função clicar fora
+        function outsideClick(e) {
+            if (e.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        $(document).ready(function () {
+            //Marcar todas as linhas
+            $("#marcarTodos").change(function () {
+                if ($(this).is(':checked')) {
+                    //foreach marcando todas as linhas
+                    $('#tabelass tr').addClass('marcar');
+                    $('#tabelass tr button').prop('disabled', true);
+                    $("#btn-marcar").show();
+                } else {
+                    //foreach marcando todas as linhas
+                    $('#tabelass tr').removeClass('marcar');
+                    $('#tabelass tr button').prop('disabled', false);
+                    $("#btn-marcar").hide();
+                }
+            });
+
+            $("#btn-marcar").click(function () {
+                if (confirm("Deseja processar todos os itens marcardos??")) {
+                    $("#simpleModal").show();
+                    
+                }
+            });
+
+
+
+            $('input[type="file"]').change(function (e) {
+                var file = this.files[0];
+                var FR = new FileReader();
+
+                FR.readAsText(file);
+                FR.onload = function (data) {
+                    var myVar = data.target.result;
+                    //Quebra as lihnas
+                    var teste = myVar.split("\n");
+
+                    var tr = "<tr>";
+
+                    teste.forEach(function (valor, chave) {
+                        var linha = valor.split(";");
+
+                        var data = linha[0];
+                        var valors = linha[1];
+                        var descricao = linha[2];
+                        var categoria = linha[3];
+
+                        var newRow = $("<tr>");
+                        var cols = "";
+                        //cols += '<td><input type="checkbox" id="checagem_' + chave + '"</td>';
+                        cols += '<td class="dataMov">' + data + '</td>';
+                        cols += '<td class="descMov">' + descricao + '</td>';
+                        cols += '<td class="catMov">' + categoria + '</td>';
+                        cols += '<td class="valorMov"> R$' + valors + '</td>';
+                        cols += '<td>';
+                        cols += '<button type="button" id="modalBtn" class="button">Processar</button>';
+                        cols += '</td>';
+                        newRow.append(cols);
+                        $("#tabelass").append(newRow);
+
+                    });
+                    alert("Dados carregados com sucesso!!");
+                    $("#data-area").show();
+
+                    //Converter array em json
+                    //var myJsonString = JSON.stringify(teste);
+                    //alert(myVar);
+                }
+            });
+
+            $(".modal-button").click(function () {
+                //verificar se tags existem
+                if (!$('.DataValorDescricao').is(':empty')) {
+                    //capturar valor do período
+                    var periodoId = $("#PeriodoId").val();
+                    adicionarTodosLancamentos(0, periodoId);
+                } else {
+                    //Adicionar único Lançamento
+                    adicionaUmLançamento();
+                }
+            });
+
+            $("#tabelas").on("click",
+                "#modalBtn",
+                function () {
+                    //capturar elementoas da linha da tabela
+                    var par = $(this).parent().parent();
+                    var data = par.children("td:nth-child(1)");
+                    var descricao = par.children("td:nth-child(2)");
+                    var categoria = par.children("td:nth-child(3)");
+                    var valor = par.children("td:nth-child(4)");
+
+                    var labelData = '<label>Data:</label><p class="data_movimento"></p>';
+                    var labelValor = '<label>Valor:</label><p class="valor_movimento"></p>';
+                    var labelCategoria = '<label>Categoria:</label><p class="categoria_movimento"></p>';
+
+                    $(".DataValorDescricao").prepend(labelData);
+                    $(".DataValorDescricao").prepend(labelValor);
+                    $(".DataValorDescricao").prepend(labelCategoria);
+
+                    $(".descricao_movimento").text(descricao.html());
+                    $(".data_movimento").text(data.html());
+                    $(".valor_movimento").text(valor.html());
+                    $(".categoria_movimento").text(categoria.html());
+
+                    //Abrir Modal
+                    $("#simpleModal").show();
+
+                    //$('#select_file').click(function() {
+                    //    $('#image_file').show();
+                    //    $('.btn').prop('disabled', false);
+                    //    $('#image_file').change(function() {
+                    //        var filename = $('#image_file').val();
+                    //        $('#select_file').html(filename);
+                    //    });
+                    //});
+
+                    //$("#Processa_btn").click(function() {
+                    //    //$(this).removeClass("btn-warning");
+                    //    //$(this).addClass("btn-success");
+                    //});
+                });
+
+            //Lançamento simples
+            function adicionaUmLançamento() {
+                //populando as váriaveis
+                var data = $(".data_movimento").text();
+                var descricao = $(".descricao_movimento").text();
+                var valor = $(".valor_movimento").text().slice(3);
+                var categoria = $(".categoria_movimento").text().replace(/\n/ig, '');
+                var categoriaId = 0;
+                var periodoId = $("#PeriodoId").val();
+                //substituir o nome da categoria pelo codigo
+                if (categoria === "Pessoal") {
+                    categoriaId = 1;
+                }
+                if (categoria === "Casal") {
+                    categoriaId = 2;
+                }
+                if (categoria === "Outros") {
+                    categoriaId = 3;
+                }
+                //Objeto
+                var sendInfo = {
+                    Id: 0,
+                    Data: data,
+                    Valor: valor,
+                    Descricao: descricao,
+                    CategoriaId: categoriaId,
+                    PeriodoId: periodoId
+                };
+
+                //Adicionar no array para enviar ao servidor
+                var conteudo = [];
+                conteudo.push(sendInfo);
+
+                //Enviando objeto pela requisição
+                requestAjaxPost(conteudo);
+            }
+
+            function requestAjaxPost(array) {
+                $.ajax({
+                    url: '@Url.Action("Criar", "Movimenta")',
+                    //data: array,
+                    //type: "POST",
+                    data: JSON.stringify(array),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.responseText === "OK") {
+                            alert("Processado com sucesso!!!");
+                            $thatRow.remove();
+                            closeModal();
+                        } else {
+                            alert(result);
+                            closeModal();
+                            $thatRow.addClass('erro');
+                        }
+                    },
+                    error: function (result) {
+                        alert(result.responseText);
+                    }
+                });
+            }
+            //Opção após selecionar todos os registros e mandar para o servidor
+            //codigo = array a ser preenchido - periodoId = periodo selecionado anteriormente
+            function adicionarTodosLancamentos(codigo, periodoId) {
+                codigo = [];
+                $(".DataValorDescricao").empty();
+                $(".descricao_movimento").text("Selecione o período");
+
+
+                $("#tabelass tr").each(function (index, tr) {
+                    var categoriaid = 0;
+
+                    var categoria = $(tr).find(".catMov").text().replace(/\n/ig, '');;
+                    if (categoria === "Pessoal") {
+                        categoriaid = 1;
+                    }
+                    if (categoria === "Casal") {
+                        categoriaid = 2;
+                    }
+                    if (categoria === "Outros") {
+                        categoriaid = 3;
+                    }
+
+                    codigo.push({
+                        Id: 0,
+                        Data: $(tr).find(".dataMov").text(),
+                        Valor: $(tr).find(".valorMov").text().slice(3),
+                        Descricao: $(tr).find(".descMov").text(),
+                        CategoriaId: categoriaid,
+                        PeriodoId: periodoId
+                    });
+
+                    //var par = $(this).parent().parent();
+                    //var categoriaId = 0;
+                    //var categoria = $(".categoria_movimento").text().replace(/\n/ig, '');
+                    //if (categoria === "Pessoal") {
+                    //    categoriaId = 1;
+                    //}
+                    //if (categoria === "Casal") {
+                    //    categoriaId = 2;
+                    //}
+                    //if (categoria === "Outros") {
+                    //    categoriaId = 4;
+                    //}
+
+                    //codigo.push({
+                    //    Id: 0,
+                    //    Data: par.children("td:nth-child(1)"),
+                    //    Valor: par.children("td:nth-child(3)"),
+                    //    Descricao: par.children("td:nth-child(2)"),
+                    //    CategoriaId: categoriaId,
+                    //    PeriodoId: periodoId
+                    //});
+                });
+                requestAjaxPost(codigo);
+            }
+
+        });
+    </script>
+}

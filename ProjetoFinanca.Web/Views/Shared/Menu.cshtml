@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ProjetoFinanca.Modelo.Menu>
+
+<div class="lista-menu">
+    <input type="checkbox" class="drop_input">
+    @foreach (var item in Model)
+    {
+        var classe = "menu-item-" + @item.Id.ToString();
+        <div class="@classe">
+            <a href="/@item.Controller/@item.Action">
+                <i class="@item.Icon"></i>
+                <p>@item.Titulo</p>
+            </a>
+        </div>
+    }
+    @*<div class="menu-item-1">
+        <a href="@Url.Action("Index","Home")">
+            <i class="fas fa-home"></i>
+            <p>Inicio</p>
+        </a>
+    </div>
+    <div class="menu-item-2">
+        <a href="@Url.Action("Create","Movimenta")">
+            <i class="fas fa-plus-circle"></i>
+            <p>Lancamento</p>
+        </a>
+    </div>
+    <div class="menu-item-3">
+        <a href="@Url.Action("Index","Movimenta")">
+            <i class="fas fa-search"></i>
+            <p>Busca</p>
+        </a>
+    </div>
+    <div class="menu-item-4">
+        <a href="@Url.Action("Index","Periodo")">
+            <i class="fas fa-calendar-alt"></i>
+            <p>Período</p>
+        </a>
+    </div>
+    <div class="menu-item-5">
+        <a href="@Url.Action("Configuracao","Configuracao")">
+            <i class="fas fa-sync"></i>
+            <p>Up/Down</p>
+        </a>
+    </div>
+    <div class="menu-item-6">
+        <a href="#">
+            <i class="fas fa-sign-out-alt"></i>
+            <p>LogOut</p>
+        </a>
+    </div>*@
+</div>

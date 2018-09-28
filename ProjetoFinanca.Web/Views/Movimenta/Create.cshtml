@@ -1,0 +1,72 @@
+﻿@model ProjetoFinanca.Modelo.Movimentacao
+
+@{
+    ViewBag.Title = "Novo Lançamento";
+}
+
+@using (Html.BeginForm("Create", "Movimenta", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="formulario">
+        <h2 class="titulo">Incluir Gasto</h2>
+        <div class="data">
+            <div class="form-group">
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control dataValue"} })
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="valor">
+            <div class="form-group">
+                @Html.EditorFor(x => x.Valor, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="descricao">
+            <div class="form-group">
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control", @placeholder="Descrição" } })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="categoria">
+            <div class="form-group">
+                @Html.DropDownList("CategoriaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="categoria">
+            <div class="form-group">
+                @Html.DropDownList("PeriodoId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="groupBotoes">
+            <div class="form-group">
+                <input type="submit" value="Enviar" class="btn enviar" />
+                @*<button class="btn enviar">Enviar</button>*@
+            </div>
+            <div class="form-group">
+                <input type="reset" class="btn cancelar" value="Cancelar"/>
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#Valor").maskMoney({ prefix: 'R$ ', allowNegative: true, thousands: '.', decimal: ',', affixesStay: false });
+            $('#Data').datetimepicker({
+                timepicker: false,
+                format: 'd/m/y',
+                autoclose: true,
+                todayBtn: true,
+                language: 'pt-BR'
+            });
+
+        });
+    </script>
+}

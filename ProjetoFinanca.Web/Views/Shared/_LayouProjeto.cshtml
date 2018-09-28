@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="~/Content/plugins.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+
+    <link href="~/Scripts/jquery.datetimepicker.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <nav class="header">
+        <!-- <p class="nav-titulo">LeoSys</p> -->
+        <div class="container">
+            <div class="opcoes">
+                @*//Renderizar Action*@
+                @{
+                    Html.RenderAction("Menu","Home");
+                }
+            </div>
+            <div class="titulo-pagina">
+                <h2>@ViewBag.Title</h2>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="novo-content">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.maskMoney.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="~/Scripts/chartjs-plugin-datalabels.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+        <script src="~/Scripts/bootstrap-datetimepicker.pt-BR.js"></script>*@
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+08/06/2018;126,00;MaisSorriso;Pessoal
+08/06/2018;195,83;Televisão;Casal
+08/06/2018;160,44;Aluguel Carro;Casal
+08/06/2018;126,00;Paulo;Outros
+09/06/2018;37,00;Sucesso;Casal
+09/06/2018;15,00;WinnerMotos;Pessoal
+11/06/2018;26,00;ShopMusic;Pessoal
+11/06/2018;60,00;MusicalPresents;Pessoal
+11/06/2018;31,00;TecaLanches;Casal
+14/06/2018;47,25;Boni;Casal
+15/06/2018;16,50;LaranjaSucos;Casal
+15/06/2018;16,40;AlmoçoPorções;Casal
+15/06/2018;40,00;WinnerMotos;Pessoal
+16/06/2018;310,51;CoelhoDiniz;Casal
+16/06/2018;21,00;Sucesso;Casal
+18/06/2018;16,50;MercKennedy;Casal
+21/06/2018;28,90;Bobs;Casal
+22/06/2018;40,00;WinnerMotos (Marlete);Outros
+23/06/2018;31,00;Sucesso;Casal
+25/06/2018;88,28;PortoBello;Casal
+26/06/2018;15,05;Gasolina;Marlete
+28/06/2018;30,40;Bobs;Casal
+02/07/2018;21,00;Açai;Casal
+06/07/2018;35,68;Tibia;Pessoal
+07/07/2018;35,00;Bobs;Casal

@@ -1,0 +1,15 @@
+﻿08/04/2018;126,00;MaisSorriso;Pessoal
+08/04/2018;145,00;Revisão Moto;Pessoal
+08/04/2018;83,00;RevisãoMotoMatheus;Outros
+08/04/2018;195,83;Televisão;Casal
+08/04/2018;160,44;Aluguel Carro;Casal
+16/04/2018;126,00;Paulo;Outros
+08/04/2018;48,00;Tibia;Pessoal
+09/04/2018;18,00;SucessoLanches;Pessoal
+16/04/2018;36,00;PorçãoIlha DesTak;Casal
+21/04/2018;32,00;LancheTeca;Casal
+23/04/2018;20,00;SucessoLanches;Casal
+28/04/2018;15,12;Coelho Diniz;Casal
+30/04/2018;28,00;SucessoLanches;Casal
+04/05/2018;58,00;PrimeBurguer;Casal
+07/05/2018;37,93;Coelho Diniz;Casal

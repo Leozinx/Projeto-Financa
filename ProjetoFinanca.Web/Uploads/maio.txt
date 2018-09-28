@@ -1,0 +1,18 @@
+08/05/2018;126,00;MaisSorriso;Pessoal
+08/05/2018;195,83;Televisão;Casal
+08/05/2018;160,44;Aluguel Carro;Casal
+08/05/2018;126,00;Paulo;Outros
+04/06/2018;33,00;Sucesso;Casal
+01/06/2018;39,00;AlmoçoBR;Casal
+31/05/2018;29,00;Sucesso;Casal
+26/05/2018;21,19;CoelhoDiniz;Casal
+22/05/2018;20,00;CinemaPipoca;Casal
+21/05/2018;51,92;Ingressos;Casal
+21/05/2018;18,00;AçaiMaster;Casal
+21/05/2018;13,42;Indiana;Pessoal
+19/05/2018;241,57;CoelhoDiniz;Casal
+19/05/2018;36,00;Sucesso;Casal
+16/05/2018;34,79;NeiaRestaurante;Casal
+16/05/2018;34,74;NeiaRestaurante;Casal
+14/05/2018;24,00;Sucesso;Casal
+12/05/2018;10,30;MerceariaToronto;Casal
