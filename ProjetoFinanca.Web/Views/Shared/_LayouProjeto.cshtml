@@ -18,15 +18,18 @@
     <nav class="header">
         <!-- <p class="nav-titulo">LeoSys</p> -->
         <div class="container">
-            <div class="opcoes">
-                @*//Renderizar Action*@
-                @{
-                    Html.RenderAction("Menu","Home");
-                }
-            </div>
-            <div class="titulo-pagina">
-                <h2>@ViewBag.Title</h2>
-            </div>
+            @if (Request.IsAuthenticated)
+            {
+                <div class="opcoes">
+                    @*//Renderizar Action*@
+                    @{
+                        Html.RenderAction("Menu","Home");
+                    }
+                </div>
+                <div class="titulo-pagina">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            }
         </div>
     </nav>
     <div class="container">

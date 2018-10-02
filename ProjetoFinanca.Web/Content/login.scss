@@ -1,0 +1,46 @@
+﻿.login-form{
+	background: url("imagens/fundo.jpg");
+	background-size: cover;
+	height: 100vh;
+	text-align: center;
+	.conteiner{
+		position: absolute;
+		top: 35%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		h1{
+			margin-bottom: 30px;
+			color: white;
+			text-transform: uppercase;
+		}
+		input {
+			width: 100%;
+			&.form-control{
+				margin-bottom: 30px;
+				background: rgba(255,255,255,.1);
+				color: #fff;
+				font-size: 14px;
+				text-transform: uppercase;
+			}
+			&::placeholder {
+				color: #fff;
+			}
+		}
+		button{
+			color: #fff;
+			background: #0072ff;
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+			letter-spacing: 1px;
+			border-radius: 25px;
+			width: 100%;
+			padding: 10px 20px;
+			text-transform: uppercase;
+			font-weight: bold;
+			&:hover{
+				background: #005aca;
+			}
+		}
+	}
+}

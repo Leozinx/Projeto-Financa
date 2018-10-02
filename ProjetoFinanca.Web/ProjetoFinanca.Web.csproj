@@ -149,6 +149,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -158,8 +159,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MovimentaModel.cs" />
     <Compile Include="Models\MovimentoPeriodo.cs" />
+    <Compile Include="Models\RespostaRequisicao.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,8 +172,15 @@
     <Content Include="Content\imagens\acrobat2.png" />
     <Content Include="Content\imagens\download.png" />
     <Content Include="Content\imagens\excel.png" />
+    <Content Include="Content\imagens\fundo.jpg" />
     <Content Include="Content\imagens\notepad.png" />
     <Content Include="Content\imagens\upload.png" />
+    <Content Include="Content\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
     <Content Include="Content\logout.png" />
     <Content Include="Content\plugins.css" />
     <Content Include="Content\style.css" />
@@ -185,6 +196,11 @@
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\login.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Properties\PublishProfiles\Financa.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\chartjs-plugin-datalabels.min.js" />
@@ -244,6 +260,7 @@
     <Content Include="Views\Menus\Details.cshtml" />
     <Content Include="Views\Menus\Edit.cshtml" />
     <Content Include="Views\Menus\Index.cshtml" />
+    <Content Include="Views\Account\Logar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
