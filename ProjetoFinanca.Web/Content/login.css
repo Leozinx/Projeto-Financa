@@ -3,6 +3,10 @@
   background-size: cover;
   height: 100vh;
   text-align: center; }
+  .login-form.desfocado {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%); }
   .login-form .conteiner {
     position: absolute;
     top: 35%;
@@ -19,7 +23,8 @@
         background: rgba(255, 255, 255, 0.1);
         color: #fff;
         font-size: 14px;
-        text-transform: uppercase; }
+        text-transform: uppercase;
+        height: 50px; }
       .login-form .conteiner input::placeholder {
         color: #fff; }
     .login-form .conteiner button {

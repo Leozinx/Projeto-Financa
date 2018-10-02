@@ -3,6 +3,10 @@
 	background-size: cover;
 	height: 100vh;
 	text-align: center;
+    &.desfocado{
+         -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+          filter: grayscale(100%);
+     }
 	.conteiner{
 		position: absolute;
 		top: 35%;
@@ -21,6 +25,7 @@
 				color: #fff;
 				font-size: 14px;
 				text-transform: uppercase;
+                height: 50px;
 			}
 			&::placeholder {
 				color: #fff;

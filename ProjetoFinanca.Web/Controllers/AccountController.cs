@@ -62,8 +62,8 @@ namespace ProjetoFinanca.Web.Controllers
                                 Session["Username"] = vLogin.Username;
                                 ViewBag.Perfil = vLogin.Nivel.Nome;
                                 /*retorna para a tela inicial do Home*/
-                                //return Json(RespostaRequisicao.MensagemOK("OK"), JsonRequestBehavior.AllowGet);
-                                return RedirectToAction("Index", "Home");
+                                return Json(RespostaRequisicao.MensagemOK("OK"), JsonRequestBehavior.AllowGet);
+                                //return RedirectToAction("Index", "Home");
                             }
                             /*Else responsável da validação da senha*/
                             else
