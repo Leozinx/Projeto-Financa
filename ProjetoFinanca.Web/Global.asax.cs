@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace ProjetoFinanca.Web
 {
@@ -21,6 +22,16 @@ namespace ProjetoFinanca.Web
             System.IO.StreamWriter Writer = System.IO.File.AppendText("D:/Uploads/log.txt");
             Writer.WriteLine("App Started: " + DateTime.Now.ToString());
             Writer.Close();
+        }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Request.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+                FormsAuthentication.RedirectToLoginPage();
+                HttpContext.Current.Response.End();
+            }
         }
     }
 }

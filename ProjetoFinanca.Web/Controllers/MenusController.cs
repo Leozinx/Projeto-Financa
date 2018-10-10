@@ -18,7 +18,7 @@ namespace ProjetoFinanca.Web.Controllers
         // GET: Menus
         public ActionResult Index()
         {
-            return View(db.Menus.ToList());
+            return View(db.Menus.ToList().OrderBy(x => x.Id));
         }
 
         // GET: Menus/Details/5

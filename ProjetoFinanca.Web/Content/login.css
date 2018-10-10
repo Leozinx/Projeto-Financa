@@ -1,0 +1,43 @@
+﻿.login-form {
+  background: url("imagens/fundo.jpg");
+  background-size: cover;
+  height: 100vh;
+  text-align: center; }
+  .login-form.desfocado {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%); }
+  .login-form .conteiner {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .login-form .conteiner h1 {
+      margin-bottom: 30px;
+      color: white;
+      text-transform: uppercase; }
+    .login-form .conteiner input {
+      width: 100%; }
+      .login-form .conteiner input.form-control {
+        margin-bottom: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 14px;
+        text-transform: uppercase;
+        height: 50px; }
+      .login-form .conteiner input::placeholder {
+        color: #fff; }
+    .login-form .conteiner button {
+      color: #fff;
+      background: #0072ff;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      border-radius: 25px;
+      width: 100%;
+      padding: 10px 20px;
+      text-transform: uppercase;
+      font-weight: bold; }
+      .login-form .conteiner button:hover {
+        background: #005aca; }

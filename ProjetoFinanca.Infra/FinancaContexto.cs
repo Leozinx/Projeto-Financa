@@ -22,6 +22,8 @@ namespace ProjetoFinanca.Infra
         public DbSet<Periodo> Periodos { get; set; }
         public DbSet<Menu> Menus { get; set; }
 
+        public DbSet<Usuario> Usuarios { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MovimentoMap());

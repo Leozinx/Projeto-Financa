@@ -7,6 +7,7 @@ using ProjetoFinanca.Infra;
 
 namespace ProjetoFinanca.Web.Controllers
 {
+    [Authorize(Roles = "Admin, User")]
     public class HomeController : Controller
     {
         private FinancaContexto db = new FinancaContexto();

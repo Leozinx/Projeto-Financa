@@ -103,6 +103,14 @@
     <Compile Include="Migrations\201809271826210_Addlinks2.Designer.cs">
       <DependentUpon>201809271826210_Addlinks2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810012127313_UsuarioCru.cs" />
+    <Compile Include="Migrations\201810012127313_UsuarioCru.Designer.cs">
+      <DependentUpon>201810012127313_UsuarioCru.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810021427072_USuarioUp.cs" />
+    <Compile Include="Migrations\201810021427072_USuarioUp.Designer.cs">
+      <DependentUpon>201810021427072_USuarioUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -148,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809271826210_Addlinks2.resx">
       <DependentUpon>201809271826210_Addlinks2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810012127313_UsuarioCru.resx">
+      <DependentUpon>201810012127313_UsuarioCru.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810021427072_USuarioUp.resx">
+      <DependentUpon>201810021427072_USuarioUp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
