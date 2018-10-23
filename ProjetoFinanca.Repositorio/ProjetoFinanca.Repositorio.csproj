@@ -38,9 +38,8 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework6.Npgsql, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework6.Npgsql.3.2.0\lib\net45\EntityFramework6.Npgsql.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EntityFramework6.Npgsql, Version=3.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework6.Npgsql.3.1.1\lib\net45\EntityFramework6.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql, Version=4.0.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.4.0.3\lib\net451\Npgsql.dll</HintPath>
@@ -71,11 +70,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstrato\ICategorias.cs" />
+    <Compile Include="Abstrato\IMovimenta.cs" />
+    <Compile Include="Abstrato\IPeriodo.cs" />
+    <Compile Include="Abstrato\IRepositorio.cs" />
+    <Compile Include="Abstrato\IUsuario.cs" />
+    <Compile Include="Concreto\EFCategorias.cs" />
+    <Compile Include="Concreto\EFMovimenta.cs" />
+    <Compile Include="Concreto\EFPeriodo.cs" />
+    <Compile Include="Concreto\EFUsuario.cs" />
+    <Compile Include="Concreto\RepositorioBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProjetoFinanca.Infra\ProjetoFinanca.Infra.csproj">
+      <Project>{345644cb-5bc9-4dfa-acbc-d58df17c0e2d}</Project>
+      <Name>ProjetoFinanca.Infra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjetoFinanca.Modelo\ProjetoFinanca.Modelo.csproj">
+      <Project>{c52f03ab-e085-476c-8927-8e4884a7a601}</Project>
+      <Name>ProjetoFinanca.Modelo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

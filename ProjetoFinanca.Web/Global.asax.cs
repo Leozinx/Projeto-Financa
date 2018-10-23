@@ -19,9 +19,9 @@ namespace ProjetoFinanca.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 
-            System.IO.StreamWriter Writer = System.IO.File.AppendText("D:/Uploads/log.txt");
-            Writer.WriteLine("App Started: " + DateTime.Now.ToString());
-            Writer.Close();
+            //System.IO.StreamWriter Writer = System.IO.File.AppendText("D:/Uploads/log.txt");
+            //Writer.WriteLine("App Started: " + DateTime.Now.ToString());
+            //Writer.Close();
         }
 
         protected void Session_Start(object sender, EventArgs e)
