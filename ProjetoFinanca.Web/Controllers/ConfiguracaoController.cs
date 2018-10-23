@@ -23,7 +23,7 @@ namespace ProjetoFinanca.Web.Controllers
         public ActionResult Configuracao(HttpPostedFileBase postedFile)
         {
             ModelState.Clear();
-            List<MovimentaModel> customers = new List<MovimentaModel>();
+            var customers = new List<MovimentaModel>();
             string filePath = string.Empty;
             if (postedFile != null)
             {
